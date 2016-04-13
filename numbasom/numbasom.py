@@ -2,7 +2,6 @@ from numba import jit
 import numpy as np
 import math
 import collections
-import matplotlib.pyplot as plt
 from timeit import default_timer as timer
 
 
@@ -268,10 +267,3 @@ def som(som_size, num_iterations, data, is_torus=False):
 	end = timer()
 	print("SOM training took: %f seconds." %(end - start))  
 	return lattice
-
-def plot_u_matrix(lattice):
-	u_mat = u_matrix(lattice)
-	fig, ax = plt.subplots(figsize=(8,8))
-	ax.imshow(u_mat.T, interpolation='nearest', cmap='viridis') 
-	aspect='auto'
-	plt.show()
