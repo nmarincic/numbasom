@@ -1,1 +1,1 @@
-from .som import som, u_matrix, project_on_som, get_projected_vectors
+from .numbasom import som, u_matrix, project_on_som, plot_u_matrix

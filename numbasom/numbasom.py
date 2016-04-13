@@ -2,6 +2,7 @@ from numba import jit
 import numpy as np
 import math
 import collections
+import matplotlib.pyplot as plt
 from timeit import default_timer as timer
 
 
@@ -135,123 +136,131 @@ def som_calc(som_size, num_iterations, data, is_torus=False):
 
 @jit(nopython=True)
 def adapt(lattice, rand_vector, BMU, current_radius, current_lrate):
-    X, Y, Z = lattice.shape
-    for x in range(X):
-        for y in range(Y):
-            a = x-BMU[0]
-            b = y-BMU[1]
-            d = a*a + b*b
-            if d < current_radius:
-                up = d * d
-                down = current_radius * current_radius
-                res = -up / (2 * down)
-                influence = math.exp(res)
-                for z in range(Z):
-                    diff = (rand_vector[z] - lattice[x,y,z]) * influence * current_lrate
-                    lattice[x,y,z] += diff
+	X, Y, Z = lattice.shape
+	for x in range(X):
+		for y in range(Y):
+			a = x-BMU[0]
+			b = y-BMU[1]
+			d = a*a + b*b
+			if d < current_radius:
+				up = d * d
+				down = current_radius * current_radius
+				res = -up / (2 * down)
+				influence = math.exp(res)
+				for z in range(Z):
+					diff = (rand_vector[z] - lattice[x,y,z]) * influence * current_lrate
+					lattice[x,y,z] += diff
 
 @jit(nopython=True)
 def euclidean(vec1, vec2):
-    L = vec1.shape[0]
-    dist = 0
-    for l in range(L):
-        val = vec2[l] - vec1[l]
-        valsqr = val * val
-        dist += valsqr
-    return math.sqrt(dist)
+	L = vec1.shape[0]
+	dist = 0
+	for l in range(L):
+		val = vec2[l] - vec1[l]
+		valsqr = val * val
+		dist += valsqr
+	return math.sqrt(dist)
+
+
+@jit(nopython=True)
+def euclidean_squared(vec1, vec2):
+	L = vec1.shape[0]
+	dist = 0
+	for l in range(L):
+		val = vec2[l] - vec1[l]
+		valsqr = val * val
+		dist += valsqr
+	return dist
+
 
 @jit(nopython=True)
 def u_matrix(lattice):
-    X, Y, Z = lattice.shape
-    u_values = np.empty((X,Y), dtype=np.float64)
-    
-    for y in range(Y):
-        for x in range(X):
-            current = lattice[x,y]
-            dist = 0
-            num_neigh = 0
-            # left
-            if x-1 >= 0:
-                #middle
-                vec = lattice[x-1,y]
-                dist += euclidean(current, vec)
-                num_neigh += 1
-                if y - 1 >= 0:
-                    #sup
-                    vec = lattice[x-1, y-1]
-                    dist += euclidean(current, vec)
-                    num_neigh += 1
-                if y + 1 < Y:
-                    # down
-                    vec = lattice[x-1,y+1]
-                    dist += euclidean(current, vec)
-                    num_neigh += 1
-            # middle        
-            if y - 1 >= 0:
-                # up
-                vec = lattice[x,y-1]
-                dist += euclidean(current, vec)
-                num_neigh += 1
-            # down
-            if y + 1 < Y:
-                vec = lattice[x,y+1]
-                dist += euclidean(current, vec)
-                num_neigh += 1
-            # right
-            if x + 1 < X:
-                # middle
-                vec = lattice[x+1,y]
-                dist += euclidean(current, vec)
-                num_neigh += 1
-                if y - 1 >= 0:
-                    #up
-                    vec = lattice[x+1,y-1]
-                    dist += euclidean(current, vec)
-                    num_neigh += 1
-                if y + 1 < lattice.shape[1]:
-                    # down
-                    vec = lattice[x+1,y+1]
-                    dist += euclidean(current, vec)
-                    num_neigh += 1       
-            u_values[x,y] = dist / num_neigh
-    return u_values
+	X, Y, Z = lattice.shape
+	u_values = np.empty((X,Y), dtype=np.float64)
+	
+	for y in range(Y):
+		for x in range(X):
+			current = lattice[x,y]
+			dist = 0
+			num_neigh = 0
+			# left
+			if x-1 >= 0:
+				#middle
+				vec = lattice[x-1,y]
+				dist += euclidean(current, vec)
+				num_neigh += 1
+				if y - 1 >= 0:
+					#sup
+					vec = lattice[x-1, y-1]
+					dist += euclidean(current, vec)
+					num_neigh += 1
+				if y + 1 < Y:
+					# down
+					vec = lattice[x-1,y+1]
+					dist += euclidean(current, vec)
+					num_neigh += 1
+			# middle        
+			if y - 1 >= 0:
+				# up
+				vec = lattice[x,y-1]
+				dist += euclidean(current, vec)
+				num_neigh += 1
+			# down
+			if y + 1 < Y:
+				vec = lattice[x,y+1]
+				dist += euclidean(current, vec)
+				num_neigh += 1
+			# right
+			if x + 1 < X:
+				# middle
+				vec = lattice[x+1,y]
+				dist += euclidean(current, vec)
+				num_neigh += 1
+				if y - 1 >= 0:
+					#up
+					vec = lattice[x+1,y-1]
+					dist += euclidean(current, vec)
+					num_neigh += 1
+				if y + 1 < lattice.shape[1]:
+					# down
+					vec = lattice[x+1,y+1]
+					dist += euclidean(current, vec)
+					num_neigh += 1       
+			u_values[x,y] = dist / num_neigh
+	return u_values
 
 
-@jit
 def project_on_som(data, lattice, data_scaled=False):
-    if not data_scaled:
-        data = normalize(data)
-    projected = collections.defaultdict(list)
-    for index, vec in enumerate(data):
-        winning_cell, wi = project_find_closest(index, vec, lattice)
-        projected[winning_cell].append(wi)
-    return projected
+	start = timer()
+	if data_scaled:
+		data_scaled = data
+	else:
+		data_scaled = normalize(data)
+		
+	projected = collections.defaultdict(list)
+	for index, vec in enumerate(data_scaled):
+		winning_cell, wi = find_closest(index, vec, lattice)
+		projected[winning_cell].append(wi)
+	final = {key: [data[v] for v in value] for key, value in projected.items()}
+	end = timer()
+	print("Projecting on SOM took: %f seconds." %(end - start))  
+	return final
 
 
 @jit(nopython=True)
-def project_find_closest(index, vec, lattice):
-    X, Y, Z = lattice.shape
-    min_val = 1.7976931348623157e+308
-    win_index = -1
-    win_cell = (-1,-1)
-    for x in range(X):
-        for y in range(Y):
-            dist = euclidean(vec, lattice[x,y])
-            if dist < min_val:
-                min_val = dist
-                win_index = index
-                win_cell = (x,y)
-    return win_cell, win_index
-    
-    
-@jit(nopython=True)
-def get_projected_vectors(vectors, list_of_indices):
-    L, D = len(list_of_indices), vectors.shape[1]
-    sel_vectors = np.empty((L, D), dtype=np.float64)
-    for i, index in enumerate(list_of_indices):
-        sel_vectors[i] = vectors[index]
-    return sel_vectors   
-
+def find_closest(index, vec, lattice):
+	X, Y, Z = lattice.shape
+	min_val = 1.7976931348623157e+308
+	win_index = -1
+	win_cell = (-1,-1)
+	for x in range(X):
+		for y in range(Y):
+			dist = euclidean_squared(vec, lattice[x,y])
+			if dist < min_val:
+				min_val = dist
+				win_index = index
+				win_cell = (x,y)
+	return win_cell, win_index
 
 def som(som_size, num_iterations, data, is_torus=False):
 	start = timer()
@@ -259,3 +268,10 @@ def som(som_size, num_iterations, data, is_torus=False):
 	end = timer()
 	print("SOM training took: %f seconds." %(end - start))  
 	return lattice
+
+def plot_u_matrix(lattice):
+	u_mat = u_matrix(lattice)
+	fig, ax = plt.subplots(figsize=(8,8))
+	ax.imshow(u_mat.T, interpolation='nearest', cmap='viridis') 
+	aspect='auto'
+	plt.show()

@@ -1,6 +1,6 @@
 from timeit import repeat
 import numpy as np
-from numbasom.som import pairwise, pairwise_squared, som_calc
+from numbasom.numbasom import pairwise, pairwise_squared, som_calc
 from numba import jit, autojit
 
 
