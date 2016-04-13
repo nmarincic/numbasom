@@ -1,2 +1,2 @@
-from .numbasom import som, u_matrix, project_on_som
+from .numbasom import som, u_matrix, project_on_som, lattice_closest_vectors
 from .somvis import plot_u_matrix, colormaps

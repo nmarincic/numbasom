@@ -245,6 +245,36 @@ def project_on_som(data, lattice, data_scaled=False):
 	print("Projecting on SOM took: %f seconds." %(end - start))  
 	return final
 
+@jit(nopython=True)
+def find_closest_data(data, lattice):
+	X, Y, Z = lattice.shape
+	new_lattice = np.empty(lattice.shape, dtype=np.float64)
+
+	for x in range(X):
+		for y in range(Y):
+			min_val = 1.7976931348623157e+308
+			lattice_vec = lattice[x,y]
+			for i in range(len(data)):
+				data_point = data[i]
+				dist = euclidean_squared(lattice_vec,data_point)
+				if dist < min_val:
+					min_val = dist
+					new_lattice[x,y] = data_point
+	return new_lattice
+
+
+def lattice_closest_vectors(data, lattice, data_scaled=False):
+	start = timer()
+	if data_scaled:
+		data_scaled = data
+	else:
+		data_scaled = normalize(data)
+	
+	result = find_closest_data(data_scaled, lattice)
+	end = timer()
+	print("Finding closest data points took: %f seconds." %(end - start)) 
+	return result
+
 
 @jit(nopython=True)
 def find_closest(index, vec, lattice):
