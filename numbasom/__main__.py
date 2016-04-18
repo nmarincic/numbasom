@@ -1,12 +1,17 @@
 from timeit import repeat
 import numpy as np
-from numbasom.numbasom import pairwise, pairwise_squared, som_calc
+from numbasom.numbasom import pairwise, pairwise_squared, som_calc, normalize2
 from numba import jit, autojit
+import sys
 
 
-def main():
+def main(argv=None):
+	if argv is None:
+		argv = sys.argv
+	norm(argv[1])
 	#test()
-	test_som()
+	#test_som()
+	#normalize(argv)
 	
 def test():
 	# Define our test array
@@ -43,6 +48,11 @@ def timefunc(s, func, *args, **kwargs):
 	# this returns the timing
 	return timing
 	
+def norm(file):
+	vector = np.load(file)
+	normalized = normalize2(vector)
+	np.save(file+"z", normalized)
+
 
 if __name__ == '__main__':
 	main()

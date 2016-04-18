@@ -31,7 +31,12 @@ def normalize(data, min_val=0, max_val=1):
 		for j in range(dim):
 			D[i,j] = (data[i, j] - min_arr[j]) / diff[j]
 	return D
-		  
+
+def normalize2(list):
+    max_arr = np.max((list), axis=0)
+    min_arr = np.min((list), axis=0)
+    return (list - min_arr) / (max_arr - min_arr)
+
 def pairwise(X):
 	M = X.shape[0]
 	N = X.shape[1]
@@ -91,8 +96,8 @@ def get_all_BMU_indexes(BMU, X, Y):
 
 
 @jit(nopython=True)
-def som_calc(som_size, num_iterations, data, is_torus=False):
-	data_scaled = normalize(data)
+def som_calc(som_size, num_iterations, data_scaled, is_torus=False):
+	#data_scaled = normalize(data)
 	initial_radius = (max(som_size[0],som_size[1])/2)**2
 	time_constant = num_iterations/math.log(initial_radius)
 	start_lrate = 0.1
@@ -291,9 +296,24 @@ def find_closest(index, vec, lattice):
 				win_cell = (x,y)
 	return win_cell, win_index
 
-def som(som_size, num_iterations, data, is_torus=False):
-	start = timer()
-	lattice = som_calc(som_size, num_iterations, data, is_torus)
+def som(som_size, num_iterations, data, is_torus=False, is_scaled=False):
+	data_scaled = data
+	if not is_scaled:
+		start = timer()
+		data_scaled = normalize(data)
+		end = timer()
+		print("Data scaling took: %f seconds." %(end - start))
+	start = timer()  
+	lattice = som_calc(som_size, num_iterations, data_scaled, is_torus)
 	end = timer()
 	print("SOM training took: %f seconds." %(end - start))  
+	return lattice
+
+def save_lattice(lattice, filename):
+	np.save(filename, lattice)
+	print ("SOM lattice saved at %s" %filename)
+
+def load_lattice(filename):
+	lattice = np.load(filename)
+	print ("SOM lattice loaded from %s" %filename)	
 	return lattice
