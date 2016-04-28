@@ -29,13 +29,37 @@ def normalize(data, min_val=0, max_val=1):
    
 	for i in range(no_vectors):
 		for j in range(dim):
-			D[i,j] = (data[i, j] - min_arr[j]) / diff[j]
+			if diff[j] != 0:
+				D[i,j] = (data[i, j] - min_arr[j]) / diff[j]
+			else:
+				D[i,j] = 0
 	return D
 
-def normalize2(list):
-    max_arr = np.max((list), axis=0)
-    min_arr = np.min((list), axis=0)
-    return (list - min_arr) / (max_arr - min_arr)
+@jit(nopython=True)
+def normalize_with_mutate(data, min_val=0, max_val=1):
+	no_vectors, dim = data.shape
+	#D = np.empty((no_vectors,dim), dtype=np.float64)
+	inf = 1.7976931348623157e+308
+	min_arr = np.empty(dim, dtype=np.float64)
+	min_arr[:] = inf
+	max_arr = np.empty(dim, dtype=np.float64)
+	max_arr[:] = -inf
+	diff = np.empty(dim, dtype=np.float64)
+
+	for vec in range(no_vectors):
+		for d in range(dim):
+			val = data[vec,d]
+			if val < min_arr[d]:
+				min_arr[d] = val
+			if val > max_arr[d]:
+				max_arr[d] = val
+
+	for d in range(dim):
+		diff[d] = max_arr[d] - min_arr[d]
+   
+	for i in range(no_vectors):
+		for j in range(dim):
+			data[i,j] = (data[i, j] - min_arr[j]) / diff[j]
 
 def pairwise(X):
 	M = X.shape[0]
@@ -234,18 +258,27 @@ def u_matrix(lattice):
 	return u_values
 
 
-def project_on_som(data, lattice, data_scaled=False):
+def project_on_som(data, lattice, additional_list=None, data_scaled=False):
 	start = timer()
 	if data_scaled:
 		data_scaled = data
 	else:
 		data_scaled = normalize(data)
-		
+	
+	#create all keys	
 	projected = collections.defaultdict(list)
+	X, Y, Z = lattice.shape
+	for x in range(X):
+		for y in range(Y):
+			projected[(x,y)]
+	# fill keys		
 	for index, vec in enumerate(data_scaled):
 		winning_cell, wi = find_closest(index, vec, lattice)
 		projected[winning_cell].append(wi)
-	final = {key: [data[v] for v in value] for key, value in projected.items()}
+	if additional_list:
+		final = {key: [additional_list[v] for v in value] for key, value in projected.items()}
+	else:
+		final = {key: [data[v] for v in value] for key, value in projected.items()}
 	end = timer()
 	print("Projecting on SOM took: %f seconds." %(end - start))  
 	return final
