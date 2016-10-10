@@ -1,6 +1,6 @@
 from timeit import repeat
 import numpy as np
-from numbasom.numbasom import pairwise, pairwise_squared, som_calc, normalize2
+from numbasom.numbasom import pairwise, pairwise_squared, som_calc, normalize
 from numba import jit, autojit
 import sys
 
@@ -8,9 +8,9 @@ import sys
 def main(argv=None):
 	if argv is None:
 		argv = sys.argv
-	norm(argv[1])
-	#test()
-	#test_som()
+	#norm(argv[1])
+	# test()
+	test_som()
 	#normalize(argv)
 	
 def test():
@@ -21,9 +21,9 @@ def test():
 	print ("\nsolution 2 is %s times faster\n" %(a/b))
 
 def test_som():
-	som_size = (50,50)
+	som_size = (10,10)
 	no_iterations = 5000
-	data = np.random.randint(0,256, size = (50000,1000))
+	data = np.random.randint(0,256, size = (50000,10))
 	print ("SOM lattice size: %ix%i" %(som_size[0],som_size[1]))
 	print ("Number of iterations: %i" %no_iterations)
 	print ("Data dimensionality ",data.shape)
@@ -50,7 +50,7 @@ def timefunc(s, func, *args, **kwargs):
 	
 def norm(file):
 	vector = np.load(file)
-	normalized = normalize2(vector)
+	normalized = normalize(vector)
 	np.save(file+"z", normalized)
 
 

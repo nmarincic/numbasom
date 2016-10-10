@@ -1,0 +1,10 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+            "folder_exclude_patterns": ["numbasom.egg-info", "__pycache__"],
+            "file_exclude_patterns": [".python-version"]
+		}
+	]
+}
