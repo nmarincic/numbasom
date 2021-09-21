@@ -40,7 +40,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="NumbaSOM" class="doc_header"><code>class</code> <code>NumbaSOM</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L15" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>NumbaSOM</code>(<strong><code>som_size</code></strong>, <strong><code>is_torus</code></strong>=<em><code>False</code></em>)</p>
+<h2 id="SOM" class="doc_header"><code>class</code> <code>SOM</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L14" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SOM</code>(<strong><code>som_size</code></strong>, <strong><code>is_torus</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Instantiates the class with data</p>
 
@@ -78,7 +78,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="NumbaSOM.train" class="doc_header"><code>NumbaSOM.train</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L21" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>NumbaSOM.train</code>(<strong><code>data</code></strong>, <strong><code>num_iterations</code></strong>, <strong><code>is_scaled</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="SOM.train" class="doc_header"><code>SOM.train</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L20" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>SOM.train</code>(<strong><code>data</code></strong>, <strong><code>num_iterations</code></strong>, <strong><code>is_scaled</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -108,7 +108,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="normalize" class="doc_header"><code>normalize</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>normalize</code>(<strong><code>data</code></strong>, <strong><code>min_val</code></strong>=<em><code>0</code></em>, <strong><code>max_val</code></strong>=<em><code>1</code></em>)</p>
+<h4 id="normalize" class="doc_header"><code>normalize</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L34" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>normalize</code>(<strong><code>data</code></strong>, <strong><code>min_val</code></strong>=<em><code>0</code></em>, <strong><code>max_val</code></strong>=<em><code>1</code></em>)</p>
 </blockquote>
 
 </div>
@@ -139,7 +139,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="u_matrix" class="doc_header"><code>u_matrix</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L234" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>u_matrix</code>(<strong><code>lattice</code></strong>)</p>
+<h4 id="u_matrix" class="doc_header"><code>u_matrix</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L233" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>u_matrix</code>(<strong><code>lattice</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -170,7 +170,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="project_on_som" class="doc_header"><code>project_on_som</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L291" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_on_som</code>(<strong><code>data</code></strong>, <strong><code>lattice</code></strong>, <strong><code>additional_list</code></strong>=<em><code>None</code></em>, <strong><code>data_scaled</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="project_on_som" class="doc_header"><code>project_on_som</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L290" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_on_som</code>(<strong><code>data</code></strong>, <strong><code>lattice</code></strong>, <strong><code>additional_list</code></strong>=<em><code>None</code></em>, <strong><code>data_scaled</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -201,7 +201,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="lattice_closest_vectors" class="doc_header"><code>lattice_closest_vectors</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L331" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>lattice_closest_vectors</code>(<strong><code>data</code></strong>, <strong><code>lattice</code></strong>, <strong><code>additional_list</code></strong>=<em><code>None</code></em>, <strong><code>data_scaled</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="lattice_closest_vectors" class="doc_header"><code>lattice_closest_vectors</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L330" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>lattice_closest_vectors</code>(<strong><code>data</code></strong>, <strong><code>lattice</code></strong>, <strong><code>additional_list</code></strong>=<em><code>None</code></em>, <strong><code>data_scaled</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 
 </div>
@@ -232,7 +232,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="save_lattice" class="doc_header"><code>save_lattice</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L374" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_lattice</code>(<strong><code>lattice</code></strong>, <strong><code>filename</code></strong>)</p>
+<h4 id="save_lattice" class="doc_header"><code>save_lattice</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L373" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_lattice</code>(<strong><code>lattice</code></strong>, <strong><code>filename</code></strong>)</p>
 </blockquote>
 
 </div>
@@ -256,7 +256,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_lattice" class="doc_header"><code>load_lattice</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L378" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_lattice</code>(<strong><code>filename</code></strong>)</p>
+<h4 id="load_lattice" class="doc_header"><code>load_lattice</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L377" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_lattice</code>(<strong><code>filename</code></strong>)</p>
 </blockquote>
 
 </div>

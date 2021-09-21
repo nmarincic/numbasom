@@ -14,7 +14,7 @@ Train a SOM on 1000 random 3-dimensional vectors:
 
 ```python
 import numpy as np
-from numbasom.core import NumbaSOM, u_matrix, plot_u_matrix
+from numbasom import SOM, u_matrix, plot_u_matrix
 ```
 
 #### Load some data
@@ -26,7 +26,7 @@ data = np.random.randn(100,3)
 #### Initialize the library
 
 ```python
-som = NumbaSOM(som_size=(20,20))
+som = SOM(som_size=(20,20))
 ```
 
 #### Train
@@ -35,8 +35,8 @@ som = NumbaSOM(som_size=(20,20))
 lattice = som.train(data, num_iterations=1000)
 ```
 
-    Data scaling took: 0.000263 seconds.
-    SOM training took: 0.003851 seconds.
+    Data scaling took: 0.338414 seconds.
+    SOM training took: 1.049132 seconds.
 
 
 #### Display the value in the first row and first column of the lattice
@@ -48,10 +48,10 @@ lattice[1::6,1]
 
 
 
-    array([[0.26589568, 0.50836002, 0.49843773],
-           [0.48841612, 0.22821334, 0.468278  ],
-           [0.67837494, 0.35688215, 0.60746632],
-           [0.47968079, 0.39957501, 0.8833814 ]])
+    array([[0.72234145, 0.20699402, 0.48731189],
+           [0.49514563, 0.18585944, 0.64291118],
+           [0.39127316, 0.13052984, 0.4517087 ],
+           [0.40195937, 0.42461381, 0.14699424]])
 
 
 
@@ -64,7 +64,7 @@ um = u_matrix(lattice)
 #### Plot U-matrix
 
 ```python
-plot_u_matrix(um, fig_size=(4,4))
+plot_u_matrix(um)
 ```
 
 

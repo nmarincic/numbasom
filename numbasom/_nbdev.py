@@ -2,7 +2,7 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"NumbaSOM": "00_core.ipynb",
+index = {"SOM": "00_core.ipynb",
          "normalize": "00_core.ipynb",
          "normalize_with_mutate": "00_core.ipynb",
          "pairwise": "00_core.ipynb",
