@@ -40,7 +40,7 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="NumbaSOM" class="doc_header"><code>class</code> <code>NumbaSOM</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L6" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>NumbaSOM</code>(<strong><code>som_size</code></strong>, <strong><code>num_iterations</code></strong>, <strong><code>data</code></strong>, <strong><code>is_torus</code></strong>=<em><code>False</code></em>, <strong><code>isScaled</code></strong>=<em><code>False</code></em>)</p>
+<h2 id="NumbaSOM" class="doc_header"><code>class</code> <code>NumbaSOM</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L15" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>NumbaSOM</code>(<strong><code>som_size</code></strong>, <strong><code>is_torus</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Instantiates the class with data</p>
 
@@ -63,69 +63,7 @@ nb_path: "00_core.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can use this to say hello to anyone.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Test</p>
-
-</div>
-</div>
-</div>
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">som</span> <span class="o">=</span> <span class="n">NumbaSOM</span><span class="p">((</span><span class="mi">20</span><span class="p">,</span><span class="mi">20</span><span class="p">),</span><span class="mi">1000</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>hello
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="To-display-class-methods">To display class methods<a class="anchor-link" href="#To-display-class-methods"> </a></h3>
+<h2 id="Class-Methods">Class Methods<a class="anchor-link" href="#Class-Methods"> </a></h2>
 </div>
 </div>
 </div>
@@ -140,9 +78,38 @@ nb_path: "00_core.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="NumbaSOM.say_hello" class="doc_header"><code>NumbaSOM.say_hello</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L11" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>NumbaSOM.say_hello</code>(<strong><code>to</code></strong>)</p>
+<h4 id="NumbaSOM.train" class="doc_header"><code>NumbaSOM.train</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L21" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>NumbaSOM.train</code>(<strong><code>data</code></strong>, <strong><code>num_iterations</code></strong>, <strong><code>is_scaled</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
-<p>say hello to somebody</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Module-Methods">Module Methods<a class="anchor-link" href="#Module-Methods"> </a></h2>
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="normalize" class="doc_header"><code>normalize</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L35" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>normalize</code>(<strong><code>data</code></strong>, <strong><code>min_val</code></strong>=<em><code>0</code></em>, <strong><code>max_val</code></strong>=<em><code>1</code></em>)</p>
+</blockquote>
 
 </div>
 
@@ -157,16 +124,13 @@ nb_path: "00_core.ipynb"
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
-<div class="input">
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">som</span><span class="o">.</span><span class="n">say_hello</span><span class="p">(</span><span class="s2">&quot;Nikola&quot;</span><span class="p">)</span>
-</pre></div>
+</div>
+    {% endraw %}
 
-    </div>
-</div>
-</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 <div class="output_wrapper">
 <div class="output">
@@ -174,15 +138,140 @@ nb_path: "00_core.ipynb"
 <div class="output_area">
 
 
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;Hello Nikola!&#39;</pre>
-</div>
-
-</div>
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="u_matrix" class="doc_header"><code>u_matrix</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L234" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>u_matrix</code>(<strong><code>lattice</code></strong>)</p>
+</blockquote>
 
 </div>
+
 </div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="project_on_som" class="doc_header"><code>project_on_som</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L291" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_on_som</code>(<strong><code>data</code></strong>, <strong><code>lattice</code></strong>, <strong><code>additional_list</code></strong>=<em><code>None</code></em>, <strong><code>data_scaled</code></strong>=<em><code>False</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="lattice_closest_vectors" class="doc_header"><code>lattice_closest_vectors</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L331" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>lattice_closest_vectors</code>(<strong><code>data</code></strong>, <strong><code>lattice</code></strong>, <strong><code>additional_list</code></strong>=<em><code>None</code></em>, <strong><code>data_scaled</code></strong>=<em><code>False</code></em>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="save_lattice" class="doc_header"><code>save_lattice</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L374" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_lattice</code>(<strong><code>lattice</code></strong>, <strong><code>filename</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="load_lattice" class="doc_header"><code>load_lattice</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L378" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_lattice</code>(<strong><code>filename</code></strong>)</p>
+</blockquote>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
     {% endraw %}
