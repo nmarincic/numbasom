@@ -1,0 +1,32 @@
+package:
+  name: numbasom
+  version: 0.0.1
+source:
+  sha256: 8f1812d183ba5ab252bc4fd036243ea126f90db3a16d4b8394fea65baa5c74af
+  url: https://files.pythonhosted.org/packages/22/9b/15c543248f1f6519889256d98ca7ec7719839887c45dce51022cfb1a3cb9/numbasom-0.0.1.tar.gz
+about:
+  dev_url: https://nmarincic.github.io
+  doc_url: https://nmarincic.github.io
+  home: https://nmarincic.github.io
+  license: Apache Software
+  license_family: APACHE
+  summary: A Fast Self-Organizing Map Python Library Implemented in Numba
+build:
+  noarch: python
+  number: '0'
+  script: '{{ PYTHON }} -m pip install . -vv'
+extra:
+  recipe-maintainers:
+  - nmarincic
+requirements:
+  host:
+  - pip
+  - python
+  - packaging
+  run:
+  - pip
+  - python
+  - packaging
+test:
+  imports:
+  - numbasom

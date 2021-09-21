@@ -12,12 +12,65 @@ from timeit import default_timer as timer
 
 # Cell
 class SOM:
-    """Instantiates the class with data"""
+    """
+    A class representing the SOM
+
+    Attributes
+    ----------
+    says_str : str
+        a formatted string to print out what the animal says
+    name : str
+        the name of the animal
+    sound : str
+        the sound that the animal makes
+    num_legs : int
+        the number of legs the animal has (default 4)
+
+    Methods
+    -------
+    train(data, num_iterations, is_scaled=True)
+        Trains the algorithm
+    """
     def __init__(self, som_size, is_torus=False):
+        """
+        Parameters
+        ----------
+        som_size : tuple
+            The size of the lattice, i.e. (20,30) for 20 rows and 30 columns
+        is_torus : boolean
+            is_torus=True, changes the topology to a torus
+        """
         self.som_size=som_size
         self.is_torus=is_torus
 
-    def train(self, data, num_iterations, is_scaled=False):
+    def train(self, data, num_iterations, is_scaled=True):
+        """Trains the algorithm and returns the lattice.
+
+        If the argument `is_scaled` isn't passed in, there will be no scaling of the input data.
+
+        Parameters
+        ----------
+        data : numpy array
+
+            The input data tensor of the shape NxD, where:
+            N - instances axis
+            D - features axis
+
+        num_iterations : int
+
+            The number of iterations the algorithm will run.
+
+        is_scaled : boolean, optional
+
+            I True, the data will be scaled
+
+        Returns
+        ------
+        The lattice of the shape (R,C,D):
+        R - number of rows
+        C - number of columns
+        D - features axis
+        """
         data_scaled = data
         if not is_scaled:
             start = timer()
@@ -33,6 +86,31 @@ class SOM:
 # Cell
 @jit(nopython=True)
 def normalize(data, min_val=0, max_val=1):
+    """Normalizes the data between `min_val` and `max_val`
+
+        Parameters
+        ----------
+        data : numpy array
+
+            The input data tensor of the shape NxD, where:
+            N - instances axis
+            D - features axis
+
+        min_val : int, default 0
+
+            Minimum
+
+        max_val : int, default 1
+
+            Maximum
+
+        Returns
+        -------
+        The lattice of the shape (R,C,D):
+        R - number of rows
+        C - number of columns
+        D - features axis
+        """
     no_vectors, dim = data.shape
     D = np.empty((no_vectors,dim), dtype=np.float64)
     inf = 1.7976931348623157e+308
@@ -64,6 +142,7 @@ def normalize(data, min_val=0, max_val=1):
 # Internal Cell
 @jit(nopython=True)
 def normalize_with_mutate(data, min_val=0, max_val=1):
+
     no_vectors, dim = data.shape
     #D = np.empty((no_vectors,dim), dtype=np.float64)
     inf = 1.7976931348623157e+308
