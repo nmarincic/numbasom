@@ -27,7 +27,7 @@ data = np.random.random([200,3])
 
 #### Initialize the library
 
-We initalize a large map with 20 rows and 40 columns. The default topology is a 2D lattice. We can also train it on a torus by setting `is_torus=True`
+We initalize a large map with 50 rows and 100 columns. The default topology is a 2D lattice. We can also train it on a torus by setting `is_torus=True`
 
 ```python
 som = SOM(som_size=(50,100), is_torus=False)
@@ -35,13 +35,13 @@ som = SOM(som_size=(50,100), is_torus=False)
 
 #### Train the SOM
 
-We will adapt the lattice by iterating 1000 times through our data points. If we set `ìs_scaled=False`, data will be normalized before training. 
+We will adapt the lattice by iterating 10.000 times through our data points. If we set `ìs_scaled=False`, data will be normalized before training. 
 
 ```python
 lattice = som.train(data, num_iterations=10000, is_scaled=True)
 ```
 
-    SOM training took: 0.343299 seconds.
+    SOM training took: 1.716320 seconds.
 
 
 #### We can display a number of lattice cells to make sure they are 3-dimensional vectors
@@ -53,19 +53,19 @@ lattice[1::6,1]
 
 
 
-    array([[0.84320274, 0.30492829, 0.41450252],
-           [0.74273113, 0.24442997, 0.46775752],
-           [0.7079431 , 0.18936966, 0.3849527 ],
-           [0.67390875, 0.13944585, 0.1926078 ],
-           [0.511751  , 0.04086609, 0.17727931],
-           [0.40736032, 0.21150301, 0.0357543 ],
-           [0.35872757, 0.28562641, 0.0832515 ],
-           [0.16635622, 0.08152816, 0.38226892],
-           [0.05055562, 0.05010728, 0.34043282]])
+    array([[0.05169845, 0.94472638, 0.87443554],
+           [0.19436005, 0.77288777, 0.75509872],
+           [0.22945833, 0.75253613, 0.63984275],
+           [0.13979542, 0.85606064, 0.48404585],
+           [0.20973443, 0.80124035, 0.42341624],
+           [0.22262145, 0.83282046, 0.32173263],
+           [0.23051704, 0.73412993, 0.21886991],
+           [0.05582659, 0.6904873 , 0.09945935],
+           [0.10519506, 0.92841518, 0.10019958]])
 
 
 
-The shape of the lattice is (20, 40, 3) as expected
+The shape of the lattice should be (50, 100, 3)
 
 ```python
 lattice.shape
