@@ -14,14 +14,14 @@ The installation is available at PyPI. Simply type:
 
 A **Self-Organizing Map** is often used to show the underlying structure in data. To show how to use the library, we will train it on 200 random 3-dimensional vectors (so we can render them as colors):
 
-```python
+```
 import numpy as np
 from numbasom import SOM
 ```
 
 #### Create 200 random colors
 
-```python
+```
 data = np.random.random([200,3])
 ```
 
@@ -29,7 +29,7 @@ data = np.random.random([200,3])
 
 We initalize a large map with 50 rows and 100 columns. The default topology is a 2D lattice. We can also train it on a torus by setting `is_torus=True`
 
-```python
+```
 som = SOM(som_size=(50,100), is_torus=False)
 ```
 
@@ -37,7 +37,7 @@ som = SOM(som_size=(50,100), is_torus=False)
 
 We will adapt the lattice by iterating 10.000 times through our data points. If we set `ìs_scaled=False`, data will be normalized before training. 
 
-```python
+```
 lattice = som.train(data, num_iterations=10000, is_scaled=True)
 ```
 
@@ -46,7 +46,7 @@ lattice = som.train(data, num_iterations=10000, is_scaled=True)
 
 #### We can display a number of lattice cells to make sure they are 3-dimensional vectors
 
-```python
+```
 lattice[1::6,1]
 ```
 
@@ -67,7 +67,7 @@ lattice[1::6,1]
 
 The shape of the lattice should be (50, 100, 3)
 
-```python
+```
 lattice.shape
 ```
 
@@ -82,7 +82,7 @@ lattice.shape
 
 Since our lattice is made of 3-dimensional vectors, we can represent it as a lattice of colors.
 
-```python
+```
 import matplotlib.pyplot as plt
 
 plt.imshow(lattice)
@@ -97,13 +97,13 @@ plt.show()
 
 Since the most of the data will not be 3-dimensional, we can use the U-matrix (unified distance matrix by Alfred Ultsch) to visualise the map and the clusters emerging on it. 
 
-```python
+```
 from numbasom import u_matrix
 
 um = u_matrix(lattice)
 ```
 
-```python
+```
 um.shape
 ```
 
@@ -118,7 +118,7 @@ um.shape
 
 The library contains a function `plot_u_matrix` that can help visualise it.
 
-```python
+```
 from numbasom import plot_u_matrix
 
 plot_u_matrix(um, fig_size=(6.2,6.2))
