@@ -11,10 +11,10 @@ entries:
       url: /
     - output: web,pdf
       title: numbasom
-      url: /core
+      url: core.html
     - output: web,pdf
       title: vizualisation
-      url: /viz
+      url: viz.html
     output: web
     title: numbasom
   output: web

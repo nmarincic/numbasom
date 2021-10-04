@@ -1,7 +1,7 @@
 {
   "numbasom": {
     "Overview": "/",
-    "numbasom": "/core",
-    "vizualisation": "/viz"
+    "numbasom": "core.html",
+    "vizualisation": "viz.html"
   }
 }
