@@ -3,7 +3,6 @@
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
 index = {"SOM": "00_core.ipynb",
-         "normalize": "00_core.ipynb",
          "normalize_with_mutate": "00_core.ipynb",
          "pairwise": "00_core.ipynb",
          "pairwise_squared": "00_core.ipynb",
@@ -13,11 +12,12 @@ index = {"SOM": "00_core.ipynb",
          "adapt": "00_core.ipynb",
          "euclidean": "00_core.ipynb",
          "euclidean_squared": "00_core.ipynb",
-         "u_matrix": "00_core.ipynb",
-         "project_on_som": "00_core.ipynb",
          "find_closest_data_index": "00_core.ipynb",
-         "lattice_closest_vectors": "00_core.ipynb",
          "find_closest": "00_core.ipynb",
+         "normalize_data": "00_core.ipynb",
+         "u_matrix": "00_core.ipynb",
+         "project_on_lattice": "00_core.ipynb",
+         "lattice_closest_vectors": "00_core.ipynb",
          "save_lattice": "00_core.ipynb",
          "load_lattice": "00_core.ipynb",
          "plot_u_matrix": "01_viz.ipynb"}

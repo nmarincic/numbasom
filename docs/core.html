@@ -1,6 +1,6 @@
 ---
 
-title: numbasom
+title: NumbaSOM
 
 
 keywords: fastai
@@ -42,15 +42,7 @@ nb_path: "00_core.ipynb"
 <div class="output_markdown rendered_html output_subarea ">
 <h2 id="SOM" class="doc_header"><code>class</code> <code>SOM</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L14" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>SOM</code>(<strong><code>som_size</code></strong>, <strong><code>is_torus</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
-<p>A class representing the SOM</p>
-<h2 id="Attributes">Attributes<a class="anchor-link" href="#Attributes"> </a></h2><p>says_str : str
-    a formatted string to print out what the animal says
-name : str
-    the name of the animal
-sound : str
-    the sound that the animal makes
-num_legs : int
-    the number of legs the animal has (default 4)</p>
+<p>A class representing the Self-Organizing Map</p>
 <h2 id="Methods">Methods<a class="anchor-link" href="#Methods"> </a></h2><p>train(data, num_iterations, is_scaled=True)
     Trains the algorithm</p>
 
@@ -71,9 +63,68 @@ num_legs : int
 </div>
     {% endraw %}
 
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="SOM.__init__" class="doc_header"><code>SOM.__init__</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L25" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>SOM.__init__</code>(<strong><code>som_size</code></strong>, <strong><code>is_torus</code></strong>=<em><code>False</code></em>)</p>
+</blockquote>
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>som_size : tuple</p>
+
+<pre><code>    The size of the lattice, i.e. (20,30) for 20 rows and 30 columns
+
+</code></pre>
+<p>is_torus : bool</p>
+
+<pre><code>    is_torus=True, changes the topology to a torus
+
+</code></pre>
+<h2 id="Returns">Returns<a class="anchor-link" href="#Returns"> </a></h2><p>The SOM object that can be trained.</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="class-Methods">class Methods<a class="anchor-link" href="#class-Methods"> </a></h3>
+<p>Let's create a SOM with 20 rows and 30 columns</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">som</span> <span class="o">=</span> <span class="n">SOM</span><span class="p">(</span><span class="n">som_size</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="class-Methods">class Methods<a class="anchor-link" href="#class-Methods"> </a></h2>
 </div>
 </div>
 </div>
@@ -88,10 +139,10 @@ num_legs : int
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="SOM.train" class="doc_header"><code>SOM.train</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L46" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>SOM.train</code>(<strong><code>data</code></strong>, <strong><code>num_iterations</code></strong>, <strong><code>is_scaled</code></strong>=<em><code>True</code></em>)</p>
+<h4 id="SOM.train" class="doc_header"><code>SOM.train</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L44" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>SOM.train</code>(<strong><code>data</code></strong>, <strong><code>num_iterations</code></strong>, <strong><code>normalize</code></strong>=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Trains the algorithm and returns the lattice.</p>
-<p>If the argument <code>is_scaled</code> isn't passed in, there will be no scaling of the input data.</p>
+<p>If <code>normalize</code> is False, there will be no normalization of the input data.</p>
 <h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>data : numpy array</p>
 
 <pre><code>The input data tensor of the shape NxD, where:
@@ -104,15 +155,13 @@ D - features axis
 <pre><code>The number of iterations the algorithm will run.
 
 </code></pre>
-<p>is_scaled : boolean, optional</p>
+<p>normalize : boolean, optional</p>
 
-<pre><code>I True, the data will be scaled
+<pre><code>If True, the data will be normalized
 
 </code></pre>
-<h2 id="Returns">Returns<a class="anchor-link" href="#Returns"> </a></h2><p>The lattice of the shape (R,C,D):
-R - number of rows
-C - number of columns
-D - features axis</p>
+<h2 id="Returns">Returns<a class="anchor-link" href="#Returns"> </a></h2><p>The lattice of the shape (R,C,D):</p>
+<p>R - number of rows; C - number of columns; D - features axis</p>
 
 </div>
 
@@ -126,10 +175,204 @@ D - features axis</p>
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="module-Methods">module Methods<a class="anchor-link" href="#module-Methods"> </a></h3>
+<p>Let's create 10 random 3-dimensional data points:</p>
+
 </div>
 </div>
 </div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">my_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lattice</span> <span class="o">=</span> <span class="n">som</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">my_data</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>SOM training took: 0.974111 seconds.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's see what is in the lattice's cell (1,1):</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lattice</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([0.82975459, 0.4702744 , 0.80628789])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Module-Methods">Module Methods<a class="anchor-link" href="#Module-Methods"> </a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we have an non-normalized data vector p:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="n">p</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[3.80228237],
+       [4.246669  ],
+       [5.92302337],
+       [0.06539275],
+       [1.62717695],
+       [1.30394081],
+       [3.31768382],
+       [5.29360514],
+       [2.72601288],
+       [7.12291826]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can use <a href="/numbasom/core.html#normalize_data"><code>normalize_data</code></a> function to set the values between <code>min_val</code> and <code>max_val</code>:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">normalize_data</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">min_val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_val</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[0.52949006],
+       [0.59245641],
+       [0.82998363],
+       [0.        ],
+       [0.22129345],
+       [0.17549325],
+       [0.46082597],
+       [0.74079964],
+       [0.37699051],
+       [1.        ]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -141,9 +384,89 @@ D - features axis</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="normalize" class="doc_header"><code>normalize</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L87" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>normalize</code>(<strong><code>data</code></strong>, <strong><code>min_val</code></strong>=<em><code>0</code></em>, <strong><code>max_val</code></strong>=<em><code>1</code></em>)</p>
+<h4 id="u_matrix" class="doc_header"><code>u_matrix</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L336" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>u_matrix</code>(<strong><code>lattice</code></strong>)</p>
 </blockquote>
-<p>Normalizes the data between <code>min_val</code> and <code>max_val</code></p>
+<p>Builds a U-matrix on top of the trained lattice.</p>
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>lattice : list</p>
+
+<pre><code>The SOM generated lattice
+
+</code></pre>
+<h2 id="Returns">Returns<a class="anchor-link" href="#Returns"> </a></h2><p>The lattice of the shape (R,C):</p>
+<p>R - number of rows; C - number of columns;</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's create a U-matrix of the lattice, and check its shape:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">um</span> <span class="o">=</span> <span class="n">u_matrix</span><span class="p">(</span><span class="n">lattice</span><span class="p">)</span>
+<span class="n">um</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(5, 8)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="project_on_lattice" class="doc_header"><code>project_on_lattice</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L407" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_on_lattice</code>(<strong><code>data</code></strong>, <strong><code>lattice</code></strong>, <strong><code>additional_list</code></strong>=<em><code>None</code></em>, <strong><code>normalize</code></strong>=<em><code>False</code></em>)</p>
+</blockquote>
+<p>Projects the data set to the trained lattice.</p>
 <h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>data : numpy array</p>
 
 <pre><code>The input data tensor of the shape NxD, where:
@@ -151,20 +474,236 @@ N - instances axis
 D - features axis
 
 </code></pre>
-<p>min_val : int, default 0</p>
+<p>additional_list : int, optional</p>
 
-<pre><code>Minimum
-
-</code></pre>
-<p>max_val : int, default 1</p>
-
-<pre><code>Maximum
+<pre><code>You can additionally pass a vector of the same length as `data`
+with labels describing each data point in any way.
+This value will be then associated with the function's output.
 
 </code></pre>
-<h2 id="Returns">Returns<a class="anchor-link" href="#Returns"> </a></h2><p>The lattice of the shape (R,C,D):
-R - number of rows
-C - number of columns
-D - features axis</p>
+<p>normalize : boolean, optional</p>
+
+<pre><code>If True, the data will be normalized
+
+</code></pre>
+<h2 id="Returns">Returns<a class="anchor-link" href="#Returns"> </a></h2><p>A dictionary whose keys are indexes of the lattice's cells,
+and values the data belonging to each cell</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's project onto the lattice:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">projection</span> <span class="o">=</span> <span class="n">project_on_lattice</span><span class="p">(</span><span class="n">my_data</span><span class="p">,</span> <span class="n">lattice</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">projection</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">projection</span><span class="p">[</span><span class="n">p</span><span class="p">]:</span>
+        <span class="nb">print</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">projection</span><span class="p">[</span><span class="n">p</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Projecting on SOM took: 0.155188 seconds.
+(0, 0) [0.72026671 0.68364303 0.7398497 ]
+(0, 5) [0.38419513 0.27225712 0.7623098 ]
+(0, 7) [0.18277305 0.31794927 0.73312179]
+(1, 2) [0.82589066 0.40121172 0.86289732]
+(2, 0) [0.91615362 0.56429496 0.68819752]
+(2, 6) [0.56778824 0.67454398 0.62951414]
+(3, 0) [0.92402698 0.55133819 0.63907765]
+(4, 1) [0.97268193 0.52063478 0.51377328]
+(4, 3) [0.85741004 0.17499699 0.13143077]
+(4, 7) [0.37370985 0.73221001 0.32246477]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="lattice_closest_vectors" class="doc_header"><code>lattice_closest_vectors</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L458" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>lattice_closest_vectors</code>(<strong><code>data</code></strong>, <strong><code>lattice</code></strong>, <strong><code>additional_list</code></strong>=<em><code>None</code></em>, <strong><code>normalized</code></strong>=<em><code>False</code></em>)</p>
+</blockquote>
+<p>Finds the closest data vector to each cellsin the lattice.</p>
+<h2 id="Parameters">Parameters<a class="anchor-link" href="#Parameters"> </a></h2><p>data : numpy array</p>
+
+<pre><code>The input data tensor of the shape NxD, where:
+N - instances axis
+D - features axis
+
+</code></pre>
+<p>additional_list : int, optional</p>
+
+<pre><code>You can additionally pass a vector of the same length as `data`
+with labels describing each data point in any way.
+This value will be then associated with the function's output.
+
+</code></pre>
+<p>normalize : boolean, optional</p>
+
+<pre><code>If True, the data will be normalized
+
+</code></pre>
+<h2 id="Returns">Returns<a class="anchor-link" href="#Returns"> </a></h2><p>A dictionary whose keys are indexes of the lattice's cells,
+and values the data points closest to each cell</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's find the closest vectors to the lattice:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">closest</span> <span class="o">=</span> <span class="n">lattice_closest_vectors</span><span class="p">(</span><span class="n">my_data</span><span class="p">,</span> <span class="n">lattice</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">closest</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">closest</span><span class="p">[</span><span class="n">c</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Finding closest data points took: 0.063869 seconds.
+(0, 0) [0.72026671 0.68364303 0.7398497 ]
+(0, 1) [0.72026671 0.68364303 0.7398497 ]
+(0, 2) [0.82589066 0.40121172 0.86289732]
+(0, 3) [0.82589066 0.40121172 0.86289732]
+(0, 4) [0.38419513 0.27225712 0.7623098 ]
+(0, 5) [0.38419513 0.27225712 0.7623098 ]
+(0, 6) [0.18277305 0.31794927 0.73312179]
+(0, 7) [0.18277305 0.31794927 0.73312179]
+(1, 0) [0.91615362 0.56429496 0.68819752]
+(1, 1) [0.82589066 0.40121172 0.86289732]
+(1, 2) [0.82589066 0.40121172 0.86289732]
+(1, 3) [0.82589066 0.40121172 0.86289732]
+(1, 4) [0.38419513 0.27225712 0.7623098 ]
+(1, 5) [0.38419513 0.27225712 0.7623098 ]
+(1, 6) [0.56778824 0.67454398 0.62951414]
+(1, 7) [0.18277305 0.31794927 0.73312179]
+(2, 0) [0.91615362 0.56429496 0.68819752]
+(2, 1) [0.91615362 0.56429496 0.68819752]
+(2, 2) [0.82589066 0.40121172 0.86289732]
+(2, 3) [0.82589066 0.40121172 0.86289732]
+(2, 4) [0.56778824 0.67454398 0.62951414]
+(2, 5) [0.56778824 0.67454398 0.62951414]
+(2, 6) [0.56778824 0.67454398 0.62951414]
+(2, 7) [0.56778824 0.67454398 0.62951414]
+(3, 0) [0.92402698 0.55133819 0.63907765]
+(3, 1) [0.97268193 0.52063478 0.51377328]
+(3, 2) [0.97268193 0.52063478 0.51377328]
+(3, 3) [0.85741004 0.17499699 0.13143077]
+(3, 4) [0.85741004 0.17499699 0.13143077]
+(3, 5) [0.56778824 0.67454398 0.62951414]
+(3, 6) [0.56778824 0.67454398 0.62951414]
+(3, 7) [0.37370985 0.73221001 0.32246477]
+(4, 0) [0.97268193 0.52063478 0.51377328]
+(4, 1) [0.97268193 0.52063478 0.51377328]
+(4, 2) [0.97268193 0.52063478 0.51377328]
+(4, 3) [0.85741004 0.17499699 0.13143077]
+(4, 4) [0.85741004 0.17499699 0.13143077]
+(4, 5) [0.85741004 0.17499699 0.13143077]
+(4, 6) [0.37370985 0.73221001 0.32246477]
+(4, 7) [0.37370985 0.73221001 0.32246477]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h4 id="save_lattice" class="doc_header"><code>save_lattice</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L510" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_lattice</code>(<strong><code>lattice</code></strong>, <strong><code>filename</code></strong>)</p>
+</blockquote>
+<p>Saves the lattice as the numpy vector</p>
 
 </div>
 
@@ -194,125 +733,9 @@ D - features axis</p>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="u_matrix" class="doc_header"><code>u_matrix</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L312" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>u_matrix</code>(<strong><code>lattice</code></strong>)</p>
+<h4 id="load_lattice" class="doc_header"><code>load_lattice</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L516" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_lattice</code>(<strong><code>filename</code></strong>)</p>
 </blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="project_on_som" class="doc_header"><code>project_on_som</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L369" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>project_on_som</code>(<strong><code>data</code></strong>, <strong><code>lattice</code></strong>, <strong><code>additional_list</code></strong>=<em><code>None</code></em>, <strong><code>data_scaled</code></strong>=<em><code>False</code></em>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="lattice_closest_vectors" class="doc_header"><code>lattice_closest_vectors</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L409" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>lattice_closest_vectors</code>(<strong><code>data</code></strong>, <strong><code>lattice</code></strong>, <strong><code>additional_list</code></strong>=<em><code>None</code></em>, <strong><code>data_scaled</code></strong>=<em><code>False</code></em>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="save_lattice" class="doc_header"><code>save_lattice</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L452" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>save_lattice</code>(<strong><code>lattice</code></strong>, <strong><code>filename</code></strong>)</p>
-</blockquote>
-
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    {% endraw %}
-
-    {% raw %}
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<h4 id="load_lattice" class="doc_header"><code>load_lattice</code><a href="https://github.com/nmarincic/numbasom/tree/master/numbasom/core.py#L456" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>load_lattice</code>(<strong><code>filename</code></strong>)</p>
-</blockquote>
+<p>Loads the lattice as the numpy vector</p>
 
 </div>
 

@@ -35,13 +35,13 @@ som = SOM(som_size=(50,100), is_torus=False)
 
 #### Train the SOM
 
-We will adapt the lattice by iterating 10.000 times through our data points. If we set `ìs_scaled=False`, data will be normalized before training. 
+We will adapt the lattice by iterating 10.000 times through our data points. If we set `normalize=True`, data will be normalized before training. 
 
 ```
-lattice = som.train(data, num_iterations=10000, is_scaled=True)
+lattice = som.train(data, num_iterations=10000, normalize=False)
 ```
 
-    SOM training took: 1.739157 seconds.
+    SOM training took: 1.226620 seconds.
 
 
 #### We can display a number of lattice cells to make sure they are 3-dimensional vectors
@@ -53,15 +53,15 @@ lattice[1::6,1]
 
 
 
-    array([[0.8898463 , 0.50800545, 0.07200279],
-           [0.94995645, 0.3065905 , 0.11594923],
-           [0.93479887, 0.2773684 , 0.08419648],
-           [0.68727976, 0.26837477, 0.09449021],
-           [0.52862876, 0.2603103 , 0.10168457],
-           [0.30479918, 0.0459141 , 0.05882781],
-           [0.16544945, 0.06159906, 0.07049482],
-           [0.14075432, 0.10885766, 0.03924538],
-           [0.21722675, 0.24569948, 0.04674323]])
+    array([[0.05352045, 0.15896125, 0.7420259 ],
+           [0.15439387, 0.37704456, 0.93526777],
+           [0.08515633, 0.53175494, 0.91804874],
+           [0.06335633, 0.49642414, 0.69104741],
+           [0.06591933, 0.59309804, 0.49921794],
+           [0.16320654, 0.72864344, 0.50206561],
+           [0.15155032, 0.86532851, 0.5941866 ],
+           [0.12491621, 0.80582096, 0.88880239],
+           [0.08571474, 0.76112734, 0.9400243 ]])
 
 
 
@@ -126,4 +126,77 @@ plot_u_matrix(um, fig_size=(6.2,6.2))
 
 
 ![png](docs/images/output_28_0.png)
+
+
+#### Project on the lattice
+
+```
+from numbasom import project_on_lattice
+```
+
+Let's project a couple of predefined color on the trained lattice and see in which cells they will end up:
+
+```
+colors = np.array([[1.,0.,0.],[0.,1.,0.],[0.,0.,1.],[1.,1.,0.],[0.,0.,0.],[1.,1.,1.]])
+color_labels = ['red', 'green', 'blue', 'yellow', 'black', 'white']
+```
+
+```
+projection = project_on_lattice(colors, lattice, additional_list=color_labels)
+```
+
+    Projecting on SOM took: 0.207900 seconds.
+
+
+```
+for p in projection:
+    if projection[p]:
+        print (p, projection[p][0])
+```
+
+    (2, 0) blue
+    (3, 65) red
+    (10, 99) black
+    (42, 65) yellow
+    (43, 89) green
+    (46, 34) white
+
+
+#### Find every cell's closest vector in the data
+
+We can again use the colors example:
+
+```
+from numbasom import lattice_closest_vectors
+```
+
+```
+closest = lattice_closest_vectors(colors, lattice, additional_list=color_labels)
+```
+
+    Finding closest data points took: 0.070732 seconds.
+
+
+We can ask now to which value in `color_labels` are out lattice cells closest to:
+
+```
+closest[(1,1)]
+```
+
+
+
+
+    ['blue']
+
+
+
+```
+closest[(20,30)]
+```
+
+
+
+
+    ['white']
+
 

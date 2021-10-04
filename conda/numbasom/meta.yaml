@@ -1,6 +1,6 @@
 package:
   name: numbasom
-  version: 0.0.1
+  version: 0.0.2
 source:
   sha256: 8f1812d183ba5ab252bc4fd036243ea126f90db3a16d4b8394fea65baa5c74af
   url: https://files.pythonhosted.org/packages/22/9b/15c543248f1f6519889256d98ca7ec7719839887c45dce51022cfb1a3cb9/numbasom-0.0.1.tar.gz

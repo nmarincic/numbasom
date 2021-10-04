@@ -10,10 +10,10 @@ entries:
       title: Overview
       url: /
     - output: web,pdf
-      title: numbasom
+      title: NumbaSOM
       url: core.html
     - output: web,pdf
-      title: vizualisation
+      title: Vizualisation
       url: viz.html
     output: web
     title: numbasom
