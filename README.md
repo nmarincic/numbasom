@@ -6,30 +6,36 @@ This is a **fast and simple to use** SOM library. It utilizes online training (o
 
 ## How to Install
 
-The installation is available at PyPI. Simply type:
+To install this package with pip run:
 
 `pip install numbasom`
 
+To install this package with conda run:
+
+`conda install -c mnikola numbasom`
+
 ## How to use
+
+To import the library you can safely use:
+
+```python
+from numbasom import *
+```
 
 A **Self-Organizing Map** is often used to show the underlying structure in data. To show how to use the library, we will train it on 200 random 3-dimensional vectors (so we can render them as colors):
 
-```
-import numpy as np
-from numbasom import SOM
-```
-
 #### Create 200 random colors
 
-```
+```python
+import numpy as np
 data = np.random.random([200,3])
 ```
 
 #### Initialize the library
 
-We initalize a large map with 50 rows and 100 columns. The default topology is a 2D lattice. We can also train it on a torus by setting `is_torus=True`
+We initalize a map with 50 rows and 100 columns. The default topology is a 2D lattice. We can also train it on a torus by setting `is_torus=True`
 
-```
+```python
 som = SOM(som_size=(50,100), is_torus=False)
 ```
 
@@ -37,37 +43,50 @@ som = SOM(som_size=(50,100), is_torus=False)
 
 We will adapt the lattice by iterating 10.000 times through our data points. If we set `normalize=True`, data will be normalized before training. 
 
+```python
+lattice = som.train(data, num_iterations=15000)
 ```
-lattice = som.train(data, num_iterations=10000, normalize=False)
+
+    SOM training took: 1.360805 seconds.
+
+
+#### To access an individual cell type
+
+```python
+lattice[5,3]
 ```
 
-    SOM training took: 1.226620 seconds.
 
 
-#### We can display a number of lattice cells to make sure they are 3-dimensional vectors
 
-```
+    array([0.03490206, 0.20784277, 0.17107473])
+
+
+
+#### To access multiple cells, slicing works
+
+```python
 lattice[1::6,1]
 ```
 
 
 
 
-    array([[0.05352045, 0.15896125, 0.7420259 ],
-           [0.15439387, 0.37704456, 0.93526777],
-           [0.08515633, 0.53175494, 0.91804874],
-           [0.06335633, 0.49642414, 0.69104741],
-           [0.06591933, 0.59309804, 0.49921794],
-           [0.16320654, 0.72864344, 0.50206561],
-           [0.15155032, 0.86532851, 0.5941866 ],
-           [0.12491621, 0.80582096, 0.88880239],
-           [0.08571474, 0.76112734, 0.9400243 ]])
+    array([[0.04101962, 0.41159521, 0.08297097],
+           [0.02298129, 0.19013015, 0.19437583],
+           [0.03383474, 0.2750792 , 0.35548515],
+           [0.13109233, 0.36215715, 0.41453517],
+           [0.0600451 , 0.48835384, 0.43311779],
+           [0.06109787, 0.57322387, 0.56854083],
+           [0.0940788 , 0.82461743, 0.46202548],
+           [0.03914962, 0.92128492, 0.32763747],
+           [0.01108377, 0.96309806, 0.16963696]])
 
 
 
 The shape of the lattice should be (50, 100, 3)
 
-```
+```python
 lattice.shape
 ```
 
@@ -82,7 +101,7 @@ lattice.shape
 
 Since our lattice is made of 3-dimensional vectors, we can represent it as a lattice of colors.
 
-```
+```python
 import matplotlib.pyplot as plt
 
 plt.imshow(lattice)
@@ -90,20 +109,20 @@ plt.show()
 ```
 
 
-![png](docs/images/output_21_0.png)
+![png](docs/images/output_26_0.png)
 
 
 #### Compute U-matrix
 
-Since the most of the data will not be 3-dimensional, we can use the U-matrix (unified distance matrix by Alfred Ultsch) to visualise the map and the clusters emerging on it. 
+Since the most of the data will not be 3-dimensional, we can use the `u_matrix` (unified distance matrix by Alfred Ultsch) to visualise the map and the clusters emerging on it. 
 
-```
-from numbasom import u_matrix
-
+```python
 um = u_matrix(lattice)
 ```
 
-```
+Each cell of the lattice is just a single value, thus the shape is:
+
+```python
 um.shape
 ```
 
@@ -118,85 +137,103 @@ um.shape
 
 The library contains a function `plot_u_matrix` that can help visualise it.
 
-```
-from numbasom import plot_u_matrix
-
+```python
 plot_u_matrix(um, fig_size=(6.2,6.2))
 ```
 
 
-![png](docs/images/output_28_0.png)
+![png](docs/images/output_34_0.png)
 
 
 #### Project on the lattice
 
-```
-from numbasom import project_on_lattice
-```
+To project data on the lattice, use `project_on_lattice` function.
 
 Let's project a couple of predefined color on the trained lattice and see in which cells they will end up:
 
-```
-colors = np.array([[1.,0.,0.],[0.,1.,0.],[0.,0.,1.],[1.,1.,0.],[0.,0.,0.],[1.,1.,1.]])
-color_labels = ['red', 'green', 'blue', 'yellow', 'black', 'white']
+```python
+colors = np.array([[1.,0.,0.],[0.,1.,0.],[0.,0.,1.],[1.,1.,0.],[0.,1.,1.],[1.,0.,1.],[0.,0.,0.],[1.,1.,1.]])
+color_labels = ['red', 'green', 'blue', 'yellow', 'cyan', 'purple','black', 'white']
 ```
 
-```
+```python
 projection = project_on_lattice(colors, lattice, additional_list=color_labels)
-```
 
-    Projecting on SOM took: 0.207900 seconds.
-
-
-```
 for p in projection:
     if projection[p]:
         print (p, projection[p][0])
 ```
 
-    (2, 0) blue
-    (3, 65) red
-    (10, 99) black
-    (42, 65) yellow
-    (43, 89) green
-    (46, 34) white
+    Projecting on SOM took: 0.207012 seconds.
+    (0, 7) black
+    (4, 38) red
+    (6, 61) purple
+    (8, 99) blue
+    (34, 66) white
+    (49, 5) green
+    (49, 40) yellow
+    (49, 99) cyan
 
 
 #### Find every cell's closest vector in the data
 
+To find every cell's closes vector in the provided data, use `lattice_closest_vectors` function.
+
 We can again use the colors example:
 
-```
-from numbasom import lattice_closest_vectors
-```
-
-```
+```python
 closest = lattice_closest_vectors(colors, lattice, additional_list=color_labels)
 ```
 
-    Finding closest data points took: 0.070732 seconds.
+    Finding closest data points took: 0.070424 seconds.
 
 
 We can ask now to which value in `color_labels` are out lattice cells closest to:
 
-```
+```python
 closest[(1,1)]
 ```
 
 
 
 
-    ['blue']
+    ['black']
 
 
 
+```python
+closest[(5,5)]
 ```
-closest[(20,30)]
+
+
+
+
+    ['black']
+
+
+
+We can find the closest vectors without supplying an additional list. Then we get the association between the lattice and the data vectors that we can display as colors.
+
+```python
+closest_vec = lattice_closest_vectors(colors, lattice)
+```
+
+    Finding closest data points took: 0.003387 seconds.
+
+
+We take the values of the `closest_vec` vector and reshape it into a numpy vector `values`.
+
+```python
+values = np.array(list(closest_vec.values())).reshape(50,100,-1)
+```
+
+We can now visualise the projection of our 8 hard-coded colors onto the lattice:
+
+```python
+plt.imshow(values)
+plt.show()
 ```
 
 
-
-
-    ['white']
-
+![png](docs/images/output_52_0.png)
 
