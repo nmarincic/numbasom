@@ -1,9 +1,9 @@
 package:
   name: numbasom
-  version: 0.0.3
+  version: 0.0.4
 source:
-  sha256: b84608e0664bd03bbf1b1e45e6c6f1783385ec3f22de607f7e263adcdb7870d3
-  url: https://files.pythonhosted.org/packages/cf/e2/ddfd171593f72816cb569608dac7c916b95256bbdf927aa5d2678dda91bb/numbasom-0.0.3.tar.gz
+  sha256: 6a8a023b80d178cd4e005a926062a0fa6fe9cb243a7ace0ae5fd0fe32b24aea6
+  url: https://files.pythonhosted.org/packages/ef/52/f961189885c1d1ff5541a881b7b9abfddaf91655ca7d3df4a8b8c2e9abf1/numbasom-0.0.4.tar.gz
 about:
   dev_url: https://nmarincic.github.io
   doc_url: https://nmarincic.github.io
@@ -23,9 +23,6 @@ requirements:
   - pip
   - python
   - packaging
-  - fastcore
-  - nbconvert==5.6.1
-  - jupyter-client==6.1.2
   - numba
   - numpy
   - matplotlib
@@ -33,9 +30,6 @@ requirements:
   - pip
   - python
   - packaging
-  - fastcore
-  - nbconvert==5.6.1
-  - jupyter-client==6.1.2
   - numba
   - numpy
   - matplotlib
