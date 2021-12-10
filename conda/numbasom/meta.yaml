@@ -1,9 +1,9 @@
 package:
   name: numbasom
-  version: 0.0.4
+  version: 0.0.5
 source:
-  sha256: 6a8a023b80d178cd4e005a926062a0fa6fe9cb243a7ace0ae5fd0fe32b24aea6
-  url: https://files.pythonhosted.org/packages/ef/52/f961189885c1d1ff5541a881b7b9abfddaf91655ca7d3df4a8b8c2e9abf1/numbasom-0.0.4.tar.gz
+  sha256: c3e14bae64e56b3f38f415d31525bd5c7c91e56f8c23ca5bf6531ed3ea21d6eb
+  url: https://files.pythonhosted.org/packages/36/ab/794740e7f017888530a38dbc3e5db4a995b6b6dd8fe8536886d051db2c64/numbasom-0.0.5.tar.gz
 about:
   dev_url: https://nmarincic.github.io
   doc_url: https://nmarincic.github.io
