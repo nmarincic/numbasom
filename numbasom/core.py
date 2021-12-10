@@ -512,7 +512,7 @@ def lattice_activations(data, lattice, normalize=False, exponent=1):
     valmin, valmax = scaled.min(), scaled.max()
     scaled = (scaled - valmin) / (valmax - valmin)
     end = timer()
-    print("Getting SOM activations took: %f seconds." %(end - start))
+    print("Computing SOM activations took: %f seconds." %(end - start))
     return scaled
 
 # Cell
