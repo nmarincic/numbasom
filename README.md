@@ -47,7 +47,7 @@ We will adapt the lattice by iterating 10.000 times through our data points. If 
 lattice = som.train(data, num_iterations=15000)
 ```
 
-    SOM training took: 1.360805 seconds.
+    SOM training took: 0.368938 seconds.
 
 
 #### To access an individual cell type
@@ -59,7 +59,7 @@ lattice[5,3]
 
 
 
-    array([0.03490206, 0.20784277, 0.17107473])
+    array([0.87372252, 0.71858106, 0.19816604])
 
 
 
@@ -72,15 +72,15 @@ lattice[1::6,1]
 
 
 
-    array([[0.04101962, 0.41159521, 0.08297097],
-           [0.02298129, 0.19013015, 0.19437583],
-           [0.03383474, 0.2750792 , 0.35548515],
-           [0.13109233, 0.36215715, 0.41453517],
-           [0.0600451 , 0.48835384, 0.43311779],
-           [0.06109787, 0.57322387, 0.56854083],
-           [0.0940788 , 0.82461743, 0.46202548],
-           [0.03914962, 0.92128492, 0.32763747],
-           [0.01108377, 0.96309806, 0.16963696]])
+    array([[0.86309   , 0.88888897, 0.1708241 ],
+           [0.90928379, 0.60953902, 0.23734598],
+           [0.94261052, 0.37160802, 0.13827486],
+           [0.94968511, 0.16788472, 0.09235177],
+           [0.87396849, 0.08082237, 0.23953314],
+           [0.90872153, 0.07001452, 0.46010789],
+           [0.49323236, 0.10603178, 0.47679678],
+           [0.37101288, 0.09028864, 0.46349619],
+           [0.27555603, 0.04726851, 0.32222643]])
 
 
 
@@ -164,15 +164,15 @@ for p in projection:
         print (p, projection[p][0])
 ```
 
-    Projecting on SOM took: 0.207012 seconds.
-    (0, 7) black
-    (4, 38) red
-    (6, 61) purple
-    (8, 99) blue
-    (34, 66) white
-    (49, 5) green
-    (49, 40) yellow
-    (49, 99) cyan
+    Projecting on SOM took: 0.156125 seconds.
+    (0, 0) yellow
+    (0, 39) green
+    (10, 65) cyan
+    (11, 91) white
+    (20, 0) red
+    (39, 99) purple
+    (41, 65) blue
+    (49, 25) black
 
 
 #### Find every cell's closest vector in the data
@@ -185,7 +185,7 @@ We can again use the colors example:
 closest = lattice_closest_vectors(colors, lattice, additional_list=color_labels)
 ```
 
-    Finding closest data points took: 0.070424 seconds.
+    Finding closest data points took: 0.003103 seconds.
 
 
 We can ask now to which value in `color_labels` are out lattice cells closest to:
@@ -197,18 +197,18 @@ closest[(1,1)]
 
 
 
-    ['black']
+    ['yellow']
 
 
 
 ```python
-closest[(5,5)]
+closest[(40,80)]
 ```
 
 
 
 
-    ['black']
+    ['blue']
 
 
 
@@ -218,7 +218,7 @@ We can find the closest vectors without supplying an additional list. Then we ge
 closest_vec = lattice_closest_vectors(colors, lattice)
 ```
 
-    Finding closest data points took: 0.003387 seconds.
+    Finding closest data points took: 0.003449 seconds.
 
 
 We take the values of the `closest_vec` vector and reshape it into a numpy vector `values`.
@@ -236,4 +236,44 @@ plt.show()
 
 
 ![png](docs/images/output_52_0.png)
+
+
+#### Compute how each data vector 'activates' the lattice
+
+We can use the function `lattice_activations`:
+
+```python
+activations = lattice_activations(colors, lattice)
+```
+
+    Getting SOM activations took: 0.000391 seconds.
+
+
+Now we can show how the vector `blue: [0.,0.,1.]`  activates the lattice:
+
+```python
+plt.imshow(activations[2])
+plt.show()
+```
+
+
+![png](docs/images/output_57_0.png)
+
+
+If we wish to scale the higher values up, and scale down the lower values, we can use the argument `exponent` when computing the activations:
+
+```python
+activations = lattice_activations(colors, lattice, exponent=8)
+```
+
+    Getting SOM activations took: 0.000908 seconds.
+
+
+```python
+plt.imshow(activations[2])
+plt.show()
+```
+
+
+![png](docs/images/output_60_0.png)
 
