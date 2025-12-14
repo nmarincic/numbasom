@@ -1,0 +1,39 @@
+# Publish to PyPI when a GitHub release is created
+#
+# How to release:
+# 1. Update version in pyproject.toml and numbasom/__init__.py
+# 2. Commit and push
+# 3. Create a GitHub release (or tag with v prefix, e.g., v0.1.0)
+# 4. This workflow automatically publishes to PyPI
+
+name: Publish to PyPI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pypi  # Must match the environment name in PyPI trusted publishing
+    permissions:
+      id-token: write  # Required for trusted publishing
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install build tools
+        run: pip install build
+
+      - name: Build package
+        run: python -m build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        # No API token needed - uses trusted publishing!
