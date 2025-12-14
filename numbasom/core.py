@@ -533,7 +533,7 @@ def lattice_closest_vectors(data, lattice, additional_list=None, normalized=Fals
             with labels describing each data point in any way.
             This value will be then associated with the function's output.
 
-        normalize : boolean, optional
+        normalized : boolean, optional
 
             If True, the data will be normalized
 

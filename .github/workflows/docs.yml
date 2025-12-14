@@ -1,0 +1,85 @@
+# This workflow builds the MkDocs documentation and deploys it to GitHub Pages
+#
+# How it works:
+# 1. Triggers on every push to master branch
+# 2. Sets up Python and installs MkDocs with required plugins
+# 3. Installs numbasom package so mkdocstrings can read the docstrings
+# 4. Builds the static HTML site from markdown files
+# 5. Deploys the built site to GitHub Pages
+
+name: Deploy Docs
+
+on:
+  push:
+    branches:
+      - master  # Runs on every push to master
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read      # Read repo contents
+  pages: write        # Deploy to Pages
+  id-token: write     # Verify deployment source
+
+# Allow only one deployment at a time
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Get the code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Step 3: Install MkDocs and plugins
+      # - mkdocs: The static site generator
+      # - mkdocs-material: The theme (dark mode, search, nice styling)
+      # - mkdocstrings[python]: Auto-generates API docs from docstrings
+      - name: Install MkDocs and dependencies
+        run: |
+          pip install mkdocs mkdocs-material "mkdocstrings[python]"
+
+      # Step 4: Install the numbasom package
+      # This is required so mkdocstrings can import and read the docstrings
+      - name: Install numbasom
+        run: |
+          pip install -e .
+
+      # Step 5: Build the documentation
+      # Converts docs/*.md → site/*.html
+      - name: Build docs
+        run: |
+          mkdocs build --strict
+        # --strict fails on warnings (catches broken links, etc.)
+
+      # Step 6: Upload the built site as an artifact for GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: 'site'  # MkDocs outputs to 'site/' directory
+
+  # Deployment job - runs after build completes successfully
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build  # Wait for build job to complete
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
