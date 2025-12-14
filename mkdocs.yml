@@ -1,0 +1,57 @@
+site_name: NumbaSOM
+site_description: A fast Self-Organizing Map Python library implemented in Numba
+site_url: https://nmarincic.github.io/numbasom/
+repo_url: https://github.com/nmarincic/numbasom
+repo_name: nmarincic/numbasom
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.sections
+    - navigation.expand
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - API Reference:
+    - Core: api/core.md
+    - Visualization: api/viz.md
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_source: false
+            show_root_heading: true
+            heading_level: 3
+            docstring_style: numpy
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - admonition
+  - pymdownx.details
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/nmarincic/numbasom
+    - icon: fontawesome/brands/python
+      link: https://pypi.org/project/numbasom/
