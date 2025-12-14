@@ -1,0 +1,73 @@
+# CI workflow - runs tests on every push and pull request
+#
+# What it does:
+# 1. Tests on multiple Python versions (3.9, 3.10, 3.11, 3.12)
+# 2. Installs the package and dependencies
+# 3. Verifies the package imports correctly
+# 4. Runs pytest tests (when tests are added)
+
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false  # Don't cancel other jobs if one fails
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          pip install -e .
+
+      - name: Verify package imports
+        run: |
+          python -c "from numbasom import SOM, u_matrix, project_on_lattice, lattice_activations, lattice_closest_vectors, save_lattice, load_lattice, plot_u_matrix"
+          python -c "from numbasom import *; print('All imports successful')"
+
+      - name: Run basic functionality test
+        run: |
+          python -c "
+          import numpy as np
+          from numbasom import SOM, u_matrix
+
+          # Create small test data
+          data = np.random.random((20, 3))
+
+          # Train a small SOM
+          som = SOM(som_size=(5, 5))
+          lattice = som.train(data, num_iterations=100)
+
+          # Verify lattice shape
+          assert lattice.shape == (5, 5, 3), f'Expected (5, 5, 3), got {lattice.shape}'
+
+          # Test u_matrix
+          um = u_matrix(lattice)
+          assert um.shape == (5, 5), f'Expected (5, 5), got {um.shape}'
+
+          print('Basic functionality test passed!')
+          "
+
+      # Uncomment when you add pytest tests:
+      # - name: Install test dependencies
+      #   run: pip install pytest
+      #
+      # - name: Run pytest
+      #   run: pytest tests/ -v
