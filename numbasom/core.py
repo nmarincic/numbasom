@@ -2,7 +2,7 @@ __all__ = ['SOM', 'u_matrix', 'project_on_lattice', 'lattice_activations', 'latt
            'load_lattice']
 
 from .viz import *
-from numba import jit
+from numba import njit
 import numpy as np
 import math
 import collections
@@ -79,10 +79,10 @@ class SOM:
         return lattice
 
 
-@jit(nopython=True)
+@njit(cache=True)
 def _normalize_with_mutate(data, min_val=0, max_val=1):
     no_vectors, dim = data.shape
-    inf = 1.7976931348623157e+308
+    inf = math.inf
     min_arr = np.empty(dim, dtype=np.float64)
     min_arr[:] = inf
     max_arr = np.empty(dim, dtype=np.float64)
@@ -105,41 +105,13 @@ def _normalize_with_mutate(data, min_val=0, max_val=1):
             data[i,j] = (data[i, j] - min_arr[j]) / diff[j]
 
 
-def _pairwise(X):
-    M = X.shape[0]
-    N = X.shape[1]
-    D = np.empty((M, M), dtype=np.float64)
-    for i in range(M):
-        for j in range(M):
-            d = 0.0
-            for k in range(N):
-                tmp = X[i, k] - X[j, k]
-                d += tmp * tmp
-            D[i, j] = np.sqrt(d)
-    return D
-
-
-def _pairwise_squared(X):
-    M = X.shape[0]
-    N = X.shape[1]
-    D = np.empty((M, M), dtype=np.uint32)
-    for i in range(M):
-        for j in range(M):
-            d = 0.0
-            for k in range(N):
-                tmp = X[i, k] - X[j, k]
-                d += tmp * tmp
-            D[i, j] = d
-    return D
-
-
-@jit(nopython=True)
+@njit(cache=True)
 def _random_lattice(som_size, dimensionality):
     size = (som_size[0], som_size[1], dimensionality)
     return np.random.random(size)
 
 
-@jit
+@njit(cache=True)
 def _get_all_BMU_indexes(BMU, X, Y):
     BMUx, BMUy = BMU[0], BMU[1]
     BMU2x, BMU3x, BMU4x = BMU[0], BMU[0], BMU[0]
@@ -158,7 +130,7 @@ def _get_all_BMU_indexes(BMU, X, Y):
     return BMU, (BMU2x, BMU2y), (BMU3x, BMU3y), (BMU4x, BMU4y)
 
 
-@jit(nopython=True)
+@njit(cache=True)
 def _som_calc(som_size, num_iterations, data, is_torus=False):
     initial_radius = (max(som_size[0],som_size[1])/2)**2
     time_constant = num_iterations/math.log(initial_radius)
@@ -173,7 +145,7 @@ def _som_calc(som_size, num_iterations, data, is_torus=False):
         rand_input = np.random.randint(datalen)
         rand_vector = data[rand_input]
 
-        BMU_dist = 1.7976931348623157e+308
+        BMU_dist = math.inf
         BMU = (0,0)
 
         for x in range(X):
@@ -200,7 +172,7 @@ def _som_calc(som_size, num_iterations, data, is_torus=False):
     return lattice
 
 
-@jit(nopython=True)
+@njit(cache=True)
 def _adapt(lattice, rand_vector, BMU, current_radius, current_lrate):
     X, Y, Z = lattice.shape
     for x in range(X):
@@ -218,7 +190,7 @@ def _adapt(lattice, rand_vector, BMU, current_radius, current_lrate):
                     lattice[x,y,z] += diff
 
 
-@jit(nopython=True)
+@njit(cache=True)
 def _euclidean(vec1, vec2):
     L = vec1.shape[0]
     dist = 0
@@ -229,7 +201,7 @@ def _euclidean(vec1, vec2):
     return math.sqrt(dist)
 
 
-@jit(nopython=True)
+@njit(cache=True)
 def _euclidean_squared(vec1, vec2):
     L = vec1.shape[0]
     dist = 0
@@ -240,9 +212,9 @@ def _euclidean_squared(vec1, vec2):
     return dist
 
 
-@jit(nopython=True)
+@njit(cache=True)
 def _find_closest_data_index(lattice_vec, data):
-    min_val = 1.7976931348623157e+308
+    min_val = math.inf
     winning_index = -1
     data_len = len(data)
     for i in range(data_len):
@@ -254,10 +226,10 @@ def _find_closest_data_index(lattice_vec, data):
     return winning_index
 
 
-@jit(nopython=True)
+@njit(cache=True)
 def _find_closest(index, vec, lattice):
     X, Y, Z = lattice.shape
-    min_val = 1.7976931348623157e+308
+    min_val = math.inf
     win_index = -1
     win_cell = (-1,-1)
     for x in range(X):
@@ -270,7 +242,7 @@ def _find_closest(index, vec, lattice):
     return win_cell, win_index
 
 
-@jit(nopython=True)
+@njit(cache=True)
 def _distances_to_lattice_vec(vec, lattice):
     X, Y, Z = lattice.shape
     empty = np.empty((X,Y))
@@ -281,7 +253,7 @@ def _distances_to_lattice_vec(vec, lattice):
     return empty
 
 
-@jit(nopython=True)
+@njit(cache=True)
 def _distances_to_lattice_matrix(veclist, lattice):
     N, _ = veclist.shape
     X, Y, _ = lattice.shape
@@ -291,7 +263,7 @@ def _distances_to_lattice_matrix(veclist, lattice):
     return res
 
 
-@jit(nopython=True)
+@njit(cache=True)
 def _normalize_data(data, min_val=0, max_val=1):
     """Normalizes the data between `min_val` and `max_val`
 
@@ -318,7 +290,7 @@ def _normalize_data(data, min_val=0, max_val=1):
         """
     no_vectors, dim = data.shape
     D = np.empty((no_vectors,dim), dtype=np.float64)
-    inf = 1.7976931348623157e+308
+    inf = math.inf
     min_arr = np.empty(dim, dtype=np.float64)
     min_arr[:] = inf
     max_arr = np.empty(dim, dtype=np.float64)
@@ -345,7 +317,7 @@ def _normalize_data(data, min_val=0, max_val=1):
     return D
 
 
-@jit(nopython=True)
+@njit(cache=True)
 def u_matrix(lattice):
     """Builds a U-matrix on top of the trained lattice.
 
