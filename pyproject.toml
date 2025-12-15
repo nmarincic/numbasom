@@ -27,9 +27,9 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
-    "numba",
-    "numpy",
-    "matplotlib",
+    "numba>=0.57",
+    "numpy>=1.22",
+    "matplotlib>=3.5",
 ]
 
 [project.urls]
