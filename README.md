@@ -12,7 +12,7 @@ To install this package with pip run:
 
 To install this package with conda run:
 
-`conda install -c mnikola numbasom`
+`conda install -c conda-forge numbasom`
 
 ## How to use
 
